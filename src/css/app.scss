@@ -1,0 +1,23 @@
+// app global css in SCSS form
+@import "./fonts/style.css";
+
+.text-special {
+  color: #fff !important;
+}
+.bg-special {
+  background: linear-gradient(254.81deg, #1a50ff 8.13%, #d96ff8 92.46%);
+}
+
+.text-action {
+  color: #fff !important;
+}
+.bg-action {
+  background: $action !important;
+}
+
+.text-sub-action {
+  color: $sub-action;
+}
+.bg-sub-action {
+  color: #fff;
+}
