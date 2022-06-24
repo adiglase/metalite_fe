@@ -6,14 +6,17 @@
     </div>
 
     <div class="list-container">
-      <FeedItemBox></FeedItemBox>
-      <FeedItemBox></FeedItemBox>
-      <FeedItemBox></FeedItemBox>
+      <FeedItemBox v-for="post in postList" :key="post.id" :postItem="post"></FeedItemBox>
     </div>
   </article>
 </template>
 <script setup>
 import FeedItemBox from "../components/FeedItemBox.vue"
+
+defineProps({
+  postList: Array
+})
+
 </script>
 <style lang="scss" scoped>
 .header {

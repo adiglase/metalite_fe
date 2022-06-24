@@ -21,14 +21,11 @@
 
       <q-separator></q-separator>
 
-      <q-img
-        src="https://images.unsplash.com/photo-1654255502816-aaf46d417767?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80"
-        alt="" :ratio="4 / 3"></q-img>
+      <q-img :src="postItem.image" alt="" :ratio="4 / 3"></q-img>
 
       <q-card-section
         class="feed-description font-semibold text-justify border-radius-inherit q-mt-sm q-px-none q-py-xs">
-        While Corfu give us the ability to shoot by the sea with amazing blue background full of light of the sky,
-        Florina give us its gentle side. The humble atmosphere and Light of Florina which comes... read more
+        {{ postItem.description }}
       </q-card-section>
 
       <q-card-actions class="q-my-xs q-pa-none">
@@ -37,13 +34,26 @@
       </q-card-actions>
 
       <q-card-section class="feed-time font-semibold border-radius-inherit q-px-none q-py-xs" color="">
-        02/30/2021
+        {{ formattedCreatedAt(postItem.created_at) }}
       </q-card-section>
 
     </q-card>
   </article>
 
 </template>
+<script setup>
+import { computed } from 'vue';
+
+defineProps({
+  postItem: Object
+})
+
+function formattedCreatedAt(createdAt) {
+  const parsedDate = new Date(createdAt)
+
+  return `${parsedDate.toLocaleDateString()} ${parsedDate.toLocaleTimeString()}`
+}
+</script>
 <style lang="scss" scoped>
 .feed-description {
   font-size: 14px;
