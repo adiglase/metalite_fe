@@ -1,6 +1,7 @@
 const routes = [
   {
     path: "/",
+    name: "feeds",
     component: () => import("layouts/MainLayout.vue"),
     children: [{ path: "", component: () => import("pages/IndexPage.vue") }],
   },
@@ -15,6 +16,9 @@ const routes = [
           WelcomeSection: () => import("pages/Login/WelcomeMessageSection.vue"),
           SubmissionSection: () => import("pages/Login/SubmissionSection.vue"),
         },
+        meta: {
+          isPublic: true,
+        },
       },
       {
         path: "/signup",
@@ -23,6 +27,9 @@ const routes = [
           WelcomeSection: () =>
             import("pages/SignUp/WelcomeMessageSection.vue"),
           SubmissionSection: () => import("pages/SignUp/SubmissionSection.vue"),
+        },
+        meta: {
+          isPublic: true,
         },
       },
     ],

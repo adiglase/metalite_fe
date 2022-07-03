@@ -40,11 +40,11 @@
   </article>
 </template>
 <script>
-import useAuth from 'src/stores/auth'
+import AuthService from "src/services/AuthService.js"
 
 export default {
   setup() {
-    const { logout } = useAuth()
+    const { logout } = AuthService()
     return {
       logout
     }

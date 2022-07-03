@@ -27,27 +27,28 @@
   </div>
 </template>
 <script setup>
-import MessageBox from "components/MessageBox.vue";
+import MessageBox from "components/MessageBox.vue"
 
-import { ref } from "vue";
-import axios from 'axios';
-import useAuth from "stores/auth.js";
+import { ref } from "vue"
+import AuthService from "src/services/AuthService.js"
+import { useErrors } from "src/stores/errors.js";
 
-const { isLoading, login, errors } = useAuth()
-const isPwd = ref(true);
+const isPwd = ref(true)
+const isLoading = ref(false)
 const input = ref({
   email: "",
   password: "",
 });
 
-function onSubmit() {
-  axios.defaults.headers.common['Authorization'] = ''
-  localStorage.removeItem('token')
+const { errors } = useErrors()
 
+function onSubmit() {
   const formData = {
     email: input.value.email,
     password: input.value.password
   }
+
+  const { login } = AuthService()
 
   login(formData)
 }

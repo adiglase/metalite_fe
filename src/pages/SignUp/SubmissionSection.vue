@@ -51,11 +51,12 @@
 </template>
 <script setup>
 import MessageBox from "components/MessageBox.vue";
-
 import { ref } from "vue";
-import useAuth from "stores/auth.js";
+import AuthService from "src/services/AuthService.js";
+import { useErrors } from "src/stores/errors.js";
 
-const { signUp, errors } = useAuth()
+const { signUp } = AuthService()
+const { errors } = useErrors()
 
 const isPwd = ref(true);
 const input = ref({
