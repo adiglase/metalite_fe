@@ -6,6 +6,7 @@
     </div>
 
     <div class="list-container">
+      <q-spinner v-if="isLoading" class="block q-mx-auto" color="primary" size="3em"></q-spinner>
       <FeedItemBox v-for="post in postList" :key="post.id" :postItem="post"></FeedItemBox>
     </div>
   </article>
@@ -14,9 +15,9 @@
 import FeedItemBox from "../components/FeedItemBox.vue"
 
 defineProps({
-  postList: Array
+  postList: Array,
+  isLoading: Boolean
 })
-
 </script>
 <style lang="scss" scoped>
 .header {

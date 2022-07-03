@@ -18,7 +18,7 @@
         New Post
       </q-btn>
     </div>
-    <NewPostBox :isShow="isShowNewPostBox"></NewPostBox>
+    <NewPostBox v-model="isShowNewPostBox" @fetchPosts="$emit('fetchPosts')"></NewPostBox>
   </div>
 </template>
 <script setup>
@@ -26,7 +26,7 @@ import { ref } from "vue";
 import NewPostBox from "./NewPostBox.vue";
 
 const searchText = ref("");
-const emit = defineEmits(["toggleLeftDrawer", "toggleRightDrawer"]);
+const emit = defineEmits(["toggleLeftDrawer", "toggleRightDrawer", "fetchPosts"]);
 const isShowNewPostBox = ref(false);
 
 </script>

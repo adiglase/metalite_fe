@@ -43,6 +43,7 @@ const input = ref({
 const { errors } = useErrors()
 
 function onSubmit() {
+  isLoading.value = true
   const formData = {
     email: input.value.email,
     password: input.value.password
@@ -51,6 +52,7 @@ function onSubmit() {
   const { login } = AuthService()
 
   login(formData)
+  isLoading.value = false
 }
 </script>
 <style lang="scss" scoped>

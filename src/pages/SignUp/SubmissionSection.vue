@@ -42,7 +42,8 @@
 
       <MessageBox v-if="errors.length" :message="String(errors)" type="danger"></MessageBox>
 
-      <q-btn rounded class="full-width" size="18px" label="Submit" type="submit" color="primary"></q-btn>
+      <q-btn :loading="isLoading" rounded class="full-width" size="18px" label="Submit" type="submit" color="primary">
+      </q-btn>
       <router-link class="link block q-my-sm font-bold" :to="{ name: 'login' }">Sudah punya akun? Log in disini
       </router-link>
 
@@ -67,8 +68,10 @@ const input = ref({
   password2: "",
   gender: "m"
 });
+const isLoading = ref(false)
 
 const onSubmit = () => {
+  isLoading.value = true
   const formData = {
     full_name: input.value.fullName,
     username: input.value.userName,
@@ -79,6 +82,7 @@ const onSubmit = () => {
   }
 
   signUp(formData)
+  isLoading.value = false
 }
 </script>
 <style lang="scss" scoped>

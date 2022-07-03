@@ -1,10 +1,11 @@
 <template>
   <q-page>
     <article class="index-container">
-      <HeaderActionBox @toggleRightDrawer="$emit('toggleRightDrawer')" @toggleLeftDrawer="$emit('toggleLeftDrawer')">
+      <HeaderActionBox @toggleRightDrawer="$emit('toggleRightDrawer')" @toggleLeftDrawer="$emit('toggleLeftDrawer')"
+        @fetchPosts="fetchPosts">
       </HeaderActionBox>
       <MessageBox v-if="errors.length" :message="String(errors)" type="danger"></MessageBox>
-      <FeedListBox :postList="postList"></FeedListBox>
+      <FeedListBox :isLoading="isLoading" :postList="postList"></FeedListBox>
     </article>
   </q-page>
 </template>
@@ -18,19 +19,22 @@ import axios from 'axios'
 
 const { errors, setErrors } = useErrors()
 const postList = ref([])
+const isLoading = ref(false)
 
 onMounted(async () => {
   await fetchPosts()
 })
 
 const fetchPosts = async () => {
+  console.log('fetch psot kepanggil')
+  isLoading.value = true
   try {
     const response = await axios.get("/api/v1/posts/")
-    console.log('fetching post')
     postList.value = response.data
   } catch (error) {
     setErrors([error.message])
   }
+  isLoading.value = false
 }
 
 </script>

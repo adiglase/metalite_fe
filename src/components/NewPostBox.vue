@@ -1,6 +1,7 @@
 <template>
-  <q-dialog :model-value="isShow" persistent>
+  <q-dialog :model-value="modelValue" persistent>
     <q-card style="width: 500px; min-width: 350px">
+
       <q-card-section>
         <div class="text-h6">New Post</div>
       </q-card-section>
@@ -19,31 +20,40 @@
         </q-form>
       </q-card-section>
 
+      <q-card-section>
+        <MessageBox v-if="errors.length" :message="String(errors)" type="danger"></MessageBox>
+      </q-card-section>
+
       <q-card-actions align="right" class="text-primary">
         <q-btn flat label="Cancel" v-close-popup></q-btn>
-        <q-btn flat label="Submit" @click="onSubmit"></q-btn>
+        <q-btn flat label="Submit" :loading="isLoading" @click="onSubmit"></q-btn>
       </q-card-actions>
     </q-card>
   </q-dialog>
 </template>
 <script setup>
+import MessageBox from "components/MessageBox.vue"
 import { useQuasar } from 'quasar';
 import { useRouter } from 'vue-router';
 import { ref } from 'vue';
+import { useErrors } from "src/stores/errors.js";
 import axios from 'axios'
 
 defineProps({
-  isShow: Boolean
+  modelValue: Boolean
 })
 
+const emit = defineEmits(['update:modelValue', 'fetchPosts'])
+
+const isLoading = ref(false)
 const $q = useQuasar()
 const router = useRouter();
-
 const image = ref(null)
 const description = ref("")
 
+const { errors, setErrors } = useErrors()
+
 const onRejected = (rejectedEntries) => {
-  console.log(rejectedEntries)
   $q.notify({
     type: 'negative',
     message: 'File tidak valid/ melebihi batas max ukuran (10MB)'
@@ -51,23 +61,20 @@ const onRejected = (rejectedEntries) => {
 }
 
 const onSubmit = async () => {
+  isLoading.value = true
   const formData = new FormData()
   formData.set("image", image.value)
   formData.set("description", description.value)
 
   try {
-    const response = await axios.post("/api/v1/posts/", formData)
+    await axios.post("/api/v1/posts/", formData)
+    emit('fetchPosts')
     router.push("/")
   } catch (error) {
-    console.log(error)
-    // if (error.response) {
-    //   for (const property in error.response.data) {
-    //     errors.value.push(`${property}: ${error.response.data[property]}`);
-    //   }
-    // } else if (error.message) {
-    //   console.error(error.message);
-    //   errors.value.push(error.message);
-    // }
+    setErrors(error.message)
   }
+
+  isLoading.value = false
+  emit('update:modelValue', false)
 }
 </script>
