@@ -36,7 +36,6 @@ export default function AuthService() {
   async function login(loginData) {
     const errorList = [];
 
-    axios.defaults.headers.common["Authorization"] = "";
     auth.setToken("");
 
     try {
@@ -44,7 +43,6 @@ export default function AuthService() {
       const token = response.data.auth_token;
 
       auth.setToken(token);
-      axios.defaults.headers.common["Authorization"] = "Token " + token;
 
       Notify.create({
         type: "positive",
@@ -67,7 +65,6 @@ export default function AuthService() {
   }
 
   async function logout() {
-    axios.defaults.headers.common["Authorization"] = "";
     auth.setToken("");
 
     Notify.create({
