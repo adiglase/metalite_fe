@@ -5,29 +5,29 @@
       <q-card-section>
         <div class="text-h6">New Post</div>
       </q-card-section>
-
-      <q-card-section>
-        <q-form class="q-gutter-lg">
-          <q-file @rejected="onRejected" dense clearable color="orange" bottom-slots v-model="image" label="Image"
-            counter max-file-size="1048576" accept=".jpg, image/*">
+      <q-form class="q-gutter-lg" @submit="onSubmit">
+        <q-card-section>
+          <q-file :rules="[val => !!val || 'Field is required']" @rejected="onRejected" dense clearable color="orange"
+            bottom-slots v-model="image" label="Image" counter max-file-size="1048576" accept=".jpg, image/*">
             <template v-slot:prepend>
               <q-icon name="image"></q-icon>
             </template>
           </q-file>
 
-          <q-input dense type="textarea" label="Description" outlined v-model="description" maxlength="1000" counter>
+          <q-input :rules="[val => !!val || 'Field is required']" dense type="textarea" label="Description" outlined
+            v-model="description" maxlength="1000" counter>
           </q-input>
-        </q-form>
-      </q-card-section>
+        </q-card-section>
 
-      <q-card-section>
-        <MessageBox v-if="errors.length" :message="String(errors)" type="danger"></MessageBox>
-      </q-card-section>
+        <q-card-section>
+          <MessageBox v-if="errors.length" :message="String(errors)" type="danger"></MessageBox>
+        </q-card-section>
 
-      <q-card-actions align="right" class="text-primary">
-        <q-btn flat label="Cancel" @click="onCancel"></q-btn>
-        <q-btn flat label="Submit" :loading="isLoading" @click="onSubmit"></q-btn>
-      </q-card-actions>
+        <q-card-actions align="right" class="text-primary">
+          <q-btn flat label="Cancel" @click="onCancel"></q-btn>
+          <q-btn flat label="Submit" type="submit" :loading="isLoading"></q-btn>
+        </q-card-actions>
+      </q-form>
     </q-card>
   </q-dialog>
 </template>
@@ -53,13 +53,6 @@ const description = ref("")
 
 const { errors, setErrors } = useErrors()
 
-onMounted(() => {
-  console.log('on mountedddddd')
-})
-onUnmounted(() => {
-  console.log('on onmounteddd')
-})
-
 const onRejected = (rejectedEntries) => {
   $q.notify({
     type: 'negative',
@@ -78,7 +71,15 @@ const onSubmit = async () => {
     emit('fetchPosts')
     router.push("/")
   } catch (error) {
-    setErrors(error.message)
+    const errorList = []
+    if (error.response) {
+      for (const property in error.response.data) {
+        errorList.push(`${property}: ${error.response.data[property]}`);
+      }
+    } else if (error.message) {
+      errorList.push(error.message);
+    }
+    setErrors(errorList)
   }
 
   isLoading.value = false
