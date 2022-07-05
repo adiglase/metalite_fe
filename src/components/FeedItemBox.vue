@@ -9,9 +9,9 @@
         </q-item-section>
 
         <q-item-section>
-          <q-item-label class="user-full-name font-bold">Khaby Lame</q-item-label>
+          <q-item-label class="user-full-name font-bold">{{ postItem.created_by.full_name }}</q-item-label>
           <q-item-label class="username" caption>
-            @khaby_001
+            @{{ postItem.created_by.username }}
           </q-item-label>
         </q-item-section>
         <q-item-section side>
@@ -29,7 +29,7 @@
       </q-card-section>
 
       <q-card-actions class="q-my-xs q-pa-none">
-        <q-btn flat color="sub-action" padding="0" icon="favorite_outline" label="873" class="q-mr-md"></q-btn>
+        <q-btn flat color="sub-action" padding="0" icon="favorite_outline" label="0" class="q-mr-md"></q-btn>
         <q-btn flat color="sub-action" padding="0" icon="chat_bubble_outline" label="0"></q-btn>
       </q-card-actions>
 
