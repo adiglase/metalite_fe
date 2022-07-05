@@ -25,7 +25,7 @@
       </q-card-section>
 
       <q-card-actions align="right" class="text-primary">
-        <q-btn flat label="Cancel" v-close-popup></q-btn>
+        <q-btn flat label="Cancel" @click="onCancel"></q-btn>
         <q-btn flat label="Submit" :loading="isLoading" @click="onSubmit"></q-btn>
       </q-card-actions>
     </q-card>
@@ -35,7 +35,7 @@
 import MessageBox from "components/MessageBox.vue"
 import { useQuasar } from 'quasar';
 import { useRouter } from 'vue-router';
-import { ref } from 'vue';
+import { ref, onMounted, onUnmounted } from 'vue';
 import { useErrors } from "src/stores/errors.js";
 import axios from 'axios'
 
@@ -52,6 +52,13 @@ const image = ref(null)
 const description = ref("")
 
 const { errors, setErrors } = useErrors()
+
+onMounted(() => {
+  console.log('on mountedddddd')
+})
+onUnmounted(() => {
+  console.log('on onmounteddd')
+})
 
 const onRejected = (rejectedEntries) => {
   $q.notify({
@@ -75,6 +82,18 @@ const onSubmit = async () => {
   }
 
   isLoading.value = false
+
+  // reset state
+  image.value = null
+  description.value = ""
+  emit('update:modelValue', false)
+}
+
+const onCancel = () => {
+  // reset state
+  image.value = null
+  description.value = ""
+
   emit('update:modelValue', false)
 }
 </script>
