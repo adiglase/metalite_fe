@@ -7,7 +7,9 @@
 
     <div class="list-container">
       <q-spinner v-if="isLoading" class="block q-mx-auto" color="primary" size="3em"></q-spinner>
-      <FeedItemBox v-for="post in postList" :key="post.id" :postItem="post"></FeedItemBox>
+      <FeedItemBox v-for="post in postList" :key="post.id" :postItem="post"
+        @updatePostItem="$emit('updatePostItem', $event)">
+      </FeedItemBox>
     </div>
   </article>
 </template>
@@ -18,6 +20,7 @@ defineProps({
   postList: Array,
   isLoading: Boolean
 })
+defineEmits(["updatePostItem"])
 </script>
 <style lang="scss" scoped>
 .header {

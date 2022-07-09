@@ -29,7 +29,9 @@
       </q-card-section>
 
       <q-card-actions class="q-my-xs q-pa-none">
-        <q-btn flat color="sub-action" padding="0" icon="favorite_outline" label="0" class="q-mr-md"></q-btn>
+        <q-btn flat :color="postItem.is_liked ? 'negative' : 'sub-action'" @click="onLikeHandler(postItem.id)"
+          padding="0" :icon="postItem.is_liked ? 'favorite' : 'favorite_outline'" :loading="isLoading"
+          :label="postItem.total_likes" class="q-mr-md"></q-btn>
         <q-btn flat color="sub-action" padding="0" icon="chat_bubble_outline" label="0"></q-btn>
       </q-card-actions>
 
@@ -42,11 +44,26 @@
 
 </template>
 <script setup>
-import { computed } from 'vue';
+import axios from 'axios';
+import { ref } from 'vue';
 
+const emit = defineEmits(["updatePostItem"])
 defineProps({
   postItem: Object
 })
+
+const isLoading = ref(false)
+
+async function onLikeHandler(postId) {
+  isLoading.value = true
+  try {
+    const response = await axios.post(`/api/v1/likes/`, { post: postId })
+    emit('updatePostItem', response.data)
+  } catch (error) {
+    console.log(error)
+  }
+  isLoading.value = false
+}
 
 function formattedCreatedAt(createdAt) {
   const parsedDate = new Date(createdAt)

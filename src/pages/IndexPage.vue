@@ -5,7 +5,7 @@
         @fetchPosts="fetchPosts">
       </HeaderActionBox>
       <MessageBox v-if="errors.length" :message="String(errors)" type="danger"></MessageBox>
-      <FeedListBox :isLoading="isLoading" :postList="postList"></FeedListBox>
+      <FeedListBox :isLoading="isLoading" :postList="postList" @updatePostItem="updatePostItem"></FeedListBox>
     </article>
   </q-page>
 </template>
@@ -26,7 +26,6 @@ onMounted(async () => {
 })
 
 const fetchPosts = async () => {
-  console.log('fetch psot kepanggil')
   isLoading.value = true
   try {
     const response = await axios.get("/api/v1/posts/")
@@ -35,6 +34,13 @@ const fetchPosts = async () => {
     setErrors([error.message])
   }
   isLoading.value = false
+}
+
+const updatePostItem = (postData) => {
+  const postItemIndex = postList.value.findIndex(item => {
+    return item.id == postData.id
+  })
+  postList.value.splice(postItemIndex, 1, postData)
 }
 
 </script>
