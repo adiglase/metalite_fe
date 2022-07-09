@@ -3,8 +3,8 @@
     <q-avatar size="80px">
       <img src="~assets/khaby_avatar.jpg" />
     </q-avatar>
-    <div class="user-name font-extrabold q-mt-sm">{{ fullName }}</div>
-    <div class="user-address font-semibold">----------------</div>
+    <div class="user-name font-extrabold q-mt-sm">{{ userData.full_name }}</div>
+    <div class="user-address font-semibold">@{{ userData.username }}</div>
     <div class="user-stats row q-ma-sm full-width text-center">
       <div class="stat-item col">
         <div class="stat-item-total font-bold text-center">0</div>
@@ -24,17 +24,10 @@
   </article>
 </template>
 <script setup>
-import { onMounted, ref } from 'vue'
-import axios from 'axios'
-
-const fullName = ref("")
+import { useCurrentUser } from 'src/stores/currentUser.js'
+const { userData } = useCurrentUser()
 
 
-onMounted(async () => {
-  const response = await axios.get("/api/v1/users/me");
-
-  fullName.value = response.data.full_name
-})
 </script>
 <style lang="scss" scoped>
 .user-name {
