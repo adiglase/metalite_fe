@@ -8,7 +8,7 @@
       <q-form class="q-gutter-lg" @submit="onSubmit">
         <q-card-section>
           <q-file :rules="[val => !!val || 'Field is required']" @rejected="onRejected" dense clearable color="orange"
-            bottom-slots v-model="image" label="Image" counter max-file-size="1048576" accept=".jpg, image/*">
+            bottom-slots v-model="image" label="Image" counter max-file-size="10485760" accept=".jpg, image/*">
             <template v-slot:prepend>
               <q-icon name="image"></q-icon>
             </template>
