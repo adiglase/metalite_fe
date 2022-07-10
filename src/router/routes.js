@@ -1,9 +1,20 @@
 const routes = [
   {
     path: "/",
-    name: "feeds",
+    name: "home",
     component: () => import("layouts/MainLayout.vue"),
-    children: [{ path: "", component: () => import("pages/IndexPage.vue") }],
+    children: [
+      {
+        path: "",
+        name: "feeds",
+        component: () => import("pages/IndexPage.vue"),
+      },
+      {
+        path: "/profile/:userId",
+        name: "profile",
+        component: () => import("pages/ProfilePage.vue"),
+      },
+    ],
   },
   {
     path: "/",

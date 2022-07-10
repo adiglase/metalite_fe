@@ -69,7 +69,7 @@ const onSubmit = async () => {
   try {
     await axios.post("/api/v1/posts/", formData)
     emit('fetchPosts')
-    router.push("/")
+    location.reload()
   } catch (error) {
     const errorList = []
     if (error.response) {

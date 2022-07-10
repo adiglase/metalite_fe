@@ -1,16 +1,10 @@
 <template>
   <q-page>
-    <article class="index-container">
-      <HeaderActionBox @toggleRightDrawer="$emit('toggleRightDrawer')" @toggleLeftDrawer="$emit('toggleLeftDrawer')"
-        @fetchPosts="fetchPosts">
-      </HeaderActionBox>
-      <MessageBox v-if="errors.length" :message="String(errors)" type="danger"></MessageBox>
-      <FeedListBox :isLoading="isLoading" :postList="postList" @updatePostItem="updatePostItem"></FeedListBox>
-    </article>
+    <MessageBox v-if="errors.length" :message="String(errors)" type="danger"></MessageBox>
+    <FeedListBox :isLoading="isLoading" :postList="postList" @updatePostItem="updatePostItem"></FeedListBox>
   </q-page>
 </template>
 <script setup>
-import HeaderActionBox from "../components/HeaderActionBox.vue"
 import FeedListBox from "../components/FeedListBox.vue"
 import MessageBox from "components/MessageBox.vue"
 import { onMounted, ref } from "vue"

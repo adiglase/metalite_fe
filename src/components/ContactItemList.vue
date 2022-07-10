@@ -4,7 +4,7 @@
     <q-item class="q-mb-sm" clickable v-ripple>
       <q-item-section avatar>
         <q-avatar>
-          <img src="~assets/khaby_avatar.jpg" />
+          <img src="~assets/dummy_profile_image.svg" />
         </q-avatar>
       </q-item-section>
       <q-item-section>
@@ -20,7 +20,7 @@
     <q-item class="q-mb-sm" clickable v-ripple>
       <q-item-section avatar>
         <q-avatar>
-          <img src="~assets/khaby_avatar.jpg" />
+          <img src="~assets/dummy_profile_image.svg" />
         </q-avatar>
       </q-item-section>
       <q-item-section>
@@ -36,7 +36,7 @@
     <q-item class="q-mb-sm" clickable v-ripple>
       <q-item-section avatar>
         <q-avatar>
-          <img src="~assets/khaby_avatar.jpg" />
+          <img src="~assets/dummy_profile_image.svg" />
         </q-avatar>
       </q-item-section>
       <q-item-section>

@@ -8,12 +8,17 @@
       <RightColumnPage></RightColumnPage>
     </q-drawer>
     <q-page-container>
-      <router-view @toggleRightDrawer="toggleRightDrawer" @toggleLeftDrawer="toggleLeftDrawer" />
+      <article class="index-container">
+        <HeaderActionBox @toggleRightDrawer="toggleRightDrawer" @toggleLeftDrawer="toggleLeftDrawer">
+        </HeaderActionBox>
+        <router-view @toggleRightDrawer="toggleRightDrawer" @toggleLeftDrawer="toggleLeftDrawer" />
+      </article>
     </q-page-container>
   </q-layout>
 </template>
 
 <script setup>
+import HeaderActionBox from "../components/HeaderActionBox.vue"
 import { ref } from "vue";
 import { useQuasar } from "quasar";
 import LeftColumnPage from "../pages/LeftColumnPage.vue";
@@ -62,5 +67,11 @@ ul {
 
 .contact-detail-address {
   font-size: 12px;
+}
+
+.index-container {
+  margin: auto;
+  padding: 40px;
+  max-width: 900px;
 }
 </style>

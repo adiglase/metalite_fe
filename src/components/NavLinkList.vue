@@ -1,12 +1,14 @@
 <template>
   <article>
     <q-list>
-      <q-item active-class="active-nav" active clickable v-ripple>
-        <q-item-section avatar top>
-          <q-avatar size="40px" icon="o_cottage" class="nav-icon font-extrabold"></q-avatar>
-        </q-item-section>
-        <q-item-section>Feed</q-item-section>
-      </q-item>
+      <router-link :to="{ name: 'feeds' }">
+        <q-item active-class="active-nav" :active="route.name === 'feeds'" clickable v-ripple>
+          <q-item-section avatar top>
+            <q-avatar size="40px" icon="o_cottage" class="nav-icon font-extrabold"></q-avatar>
+          </q-item-section>
+          <q-item-section>Feed</q-item-section>
+        </q-item>
+      </router-link>
 
       <q-item active-class="active-nav" clickable v-ripple>
         <q-item-section avatar top>
@@ -22,12 +24,16 @@
         <q-item-section>Direct</q-item-section>
       </q-item>
 
-      <q-item active-class="active-nav" clickable v-ripple>
-        <q-item-section avatar top>
-          <q-avatar size="40px" icon="o_account_circle" class="nav-icon font-extrabold"></q-avatar>
-        </q-item-section>
-        <q-item-section>Profile</q-item-section>
-      </q-item>
+      <router-link :to="{ name: 'profile', params: { userId: userData.id } }">
+        <q-item active-class="active-nav" :active="route.name === 'profile'" clickable v-ripple>
+          <q-item-section avatar top>
+            <q-avatar size="40px" icon="o_account_circle" class="nav-icon font-extrabold"></q-avatar>
+          </q-item-section>
+          <q-item-section>
+            Profile
+          </q-item-section>
+        </q-item>
+      </router-link>
 
       <q-item active-class="active-nav" @click="logout" clickable v-ripple>
         <q-item-section avatar top>
@@ -41,12 +47,25 @@
 </template>
 <script>
 import AuthService from "src/services/AuthService.js"
+import { useCurrentUser } from 'src/stores/currentUser.js'
+import { watch } from "vue"
+import { useRoute } from "vue-router"
 
 export default {
   setup() {
     const { logout } = AuthService()
+    const { userData } = useCurrentUser()
+    const route = useRoute()
+
+    // const currentRoute = router.currentRoute.value
+    // watch(() => route.name, () => {
+    //   console.log('changes')
+    // })
+
     return {
-      logout
+      logout,
+      userData,
+      route
     }
   }
 }
@@ -69,5 +88,10 @@ export default {
   .nav-icon {
     color: $primary;
   }
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
 }
 </style>

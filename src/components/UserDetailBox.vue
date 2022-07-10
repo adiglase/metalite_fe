@@ -1,10 +1,10 @@
 <template>
   <article class="user-detail column items-center">
     <q-avatar size="80px">
-      <img src="~assets/khaby_avatar.jpg" />
+      <img src="~assets/dummy_profile_image.svg" />
     </q-avatar>
     <div class="user-name font-extrabold q-mt-sm">{{ userData.full_name }}</div>
-    <div class="user-address font-semibold">@{{ userData.username }}</div>
+    <div class="username font-semibold">@{{ userData.username }}</div>
     <div class="user-stats row q-ma-sm full-width text-center">
       <div class="stat-item col">
         <div class="stat-item-total font-bold text-center">0</div>
@@ -34,7 +34,7 @@ const { userData } = useCurrentUser()
   font-size: 18px;
 }
 
-.user-address {
+.username {
   font-size: 12px;
   color: $secondary-font;
 }
