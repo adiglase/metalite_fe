@@ -7,7 +7,7 @@
     <div class="username font-semibold">@{{ userData.username }}</div>
     <div class="user-stats row q-ma-sm full-width text-center">
       <div class="stat-item col">
-        <div class="stat-item-total font-bold text-center">0</div>
+        <div class="stat-item-total font-bold text-center">{{ userData.total_posts }}</div>
         <div class="stat-item-description font-semibold">Posts</div>
       </div>
 
