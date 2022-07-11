@@ -3,10 +3,12 @@
     <article class="index-container">
       <div class="user-detail column items-center">
         <q-avatar size="100px">
-          <img src="~assets/dummy_profile_image.svg" />
+          <img :src="profileData.image" />
         </q-avatar>
         <div class="user-name font-extrabold q-mt-sm">{{ profileData.full_name }}</div>
         <div class="username font-semibold">@{{ profileData.username }}</div>
+        <q-btn @click="onFollowHandler" :loading="isLoading" rounded padding="12px 24px" class="q-mt-md" size="md"
+          color="action" no-caps :label="profileData.is_followed ? 'Unfollow' : 'Follow'"></q-btn>
         <div class="user-stats row q-ma-sm full-width text-center">
           <div class="stat-item col">
             <div class="stat-item-total font-bold text-center">{{ profileData.total_posts }}</div>
@@ -45,13 +47,15 @@ import axios from 'axios'
 import { onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
 
+const isLoading = ref(false)
+
 const errors = useErrors()
 const route = useRoute()
 const userId = route.params.userId
 
 const profileData = ref({})
 
-onMounted(async () => {
+const fetchProfileData = async () => {
   const errorList = []
   try {
     const response = await axios.get(`/api/v1/user/${userId}/`);
@@ -67,7 +71,23 @@ onMounted(async () => {
   }
 
   errors.setErrors(errorList)
+}
+
+onMounted(async () => {
+  await fetchProfileData()
 })
+
+
+const onFollowHandler = async () => {
+  isLoading.value = true
+  try {
+    const response = await axios.post(`/api/v1/follows/`, { following: userId })
+    fetchProfileData()
+  } catch (error) {
+    console.log(error)
+  }
+  isLoading.value = false
+}
 </script>
 <style lang="scss" scoped>
 .index-container {

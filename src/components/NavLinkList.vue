@@ -6,7 +6,7 @@
           <q-item-section avatar top>
             <q-avatar size="40px" icon="o_cottage" class="nav-icon font-extrabold"></q-avatar>
           </q-item-section>
-          <q-item-section>Feed</q-item-section>
+          <q-item-section>Home</q-item-section>
         </q-item>
       </router-link>
 

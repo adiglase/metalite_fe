@@ -3,6 +3,14 @@
     <q-icon class="login-icon" name="app_registration"></q-icon>
     <h3 class="block q-mx-auto text-center">Ayo bergabung!</h3>
     <q-form @submit="onSubmit" class="q-gutter-y-md full-width">
+      <q-file rounded outlined :rules="[val => !!val || 'Field is required']" @rejected="onRejected" clearable
+        color="orange" bottom-slots v-model="input.image" label="Profile Image" counter max-file-size="10485760"
+        accept=".jpg, image/*">
+        <template v-slot:append>
+          <q-icon name="image"></q-icon>
+        </template>
+      </q-file>
+
       <q-input rounded v-model="input.fullName" type="text" label="Full Name" :autofocus="true" outlined>
         <template v-slot:append>
           <q-icon name="badge"></q-icon>
@@ -61,6 +69,7 @@ const { errors } = useErrors()
 
 const isPwd = ref(true);
 const input = ref({
+  image: null,
   fullName: "",
   userName: "",
   email: "",
@@ -70,16 +79,23 @@ const input = ref({
 });
 const isLoading = ref(false)
 
+const onRejected = (rejectedEntries) => {
+  $q.notify({
+    type: 'negative',
+    message: 'File tidak valid/ melebihi batas max ukuran (10MB)'
+  })
+}
+
 const onSubmit = () => {
   isLoading.value = true
-  const formData = {
-    full_name: input.value.fullName,
-    username: input.value.userName,
-    email: input.value.email,
-    gender: input.value.gender,
-    password: input.value.password,
-    re_password: input.value.password2
-  }
+  const formData = new FormData()
+  formData.set("image", input.value.image)
+  formData.set("full_name", input.value.fullName)
+  formData.set("username", input.value.userName)
+  formData.set("email", input.value.email)
+  formData.set("gender", input.value.gender)
+  formData.set("password", input.value.password)
+  formData.set("re_password", input.value.password2)
 
   signUp(formData)
   isLoading.value = false

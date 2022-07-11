@@ -1,7 +1,7 @@
 <template>
   <article class="user-detail column items-center">
     <q-avatar size="80px">
-      <img src="~assets/dummy_profile_image.svg" />
+      <img :src="userData.image" />
     </q-avatar>
     <div class="user-name font-extrabold q-mt-sm">{{ userData.full_name }}</div>
     <div class="username font-semibold">@{{ userData.username }}</div>
