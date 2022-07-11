@@ -7,8 +7,11 @@
         </q-avatar>
         <div class="user-name font-extrabold q-mt-sm">{{ profileData.full_name }}</div>
         <div class="username font-semibold">@{{ profileData.username }}</div>
-        <q-btn @click="onFollowHandler" :loading="isLoading" rounded padding="12px 24px" class="q-mt-md" size="md"
-          color="action" no-caps :label="profileData.is_followed ? 'Unfollow' : 'Follow'"></q-btn>
+
+        <q-btn v-if="!profileData.is_current_user" @click="onFollowHandler" :loading="isLoading" rounded
+          padding="12px 24px" class="q-mt-md" size="md" color="action" no-caps
+          :label="profileData.is_followed ? 'Unfollow' : 'Follow'"></q-btn>
+
         <div class="user-stats row q-ma-sm full-width text-center">
           <div class="stat-item col">
             <div class="stat-item-total font-bold text-center">{{ profileData.total_posts }}</div>
