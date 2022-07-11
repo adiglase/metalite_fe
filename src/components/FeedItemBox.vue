@@ -4,14 +4,14 @@
       <q-item>
         <q-item-section avatar>
           <q-avatar>
-            <img src="https://cdn.quasar.dev/img/boy-avatar.png">
+            <img :src="postItem.user_image">
           </q-avatar>
         </q-item-section>
 
         <q-item-section>
-          <q-item-label class="user-full-name font-bold">{{ postItem.created_by.full_name }}</q-item-label>
+          <q-item-label class="user-full-name font-bold">{{ postItem.user_full_name }}</q-item-label>
           <q-item-label class="username" caption>
-            @{{ postItem.created_by.username }}
+            @{{ postItem.user_username }}
           </q-item-label>
         </q-item-section>
         <q-item-section side>
