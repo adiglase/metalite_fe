@@ -1,5 +1,5 @@
 <template>
-  <article class="user-detail column items-center">
+  <article v-if="userData" class="user-detail column items-center">
     <q-avatar size="80px">
       <img :src="userData.image" />
     </q-avatar>
@@ -24,8 +24,11 @@
   </article>
 </template>
 <script setup>
+import { storeToRefs } from 'pinia';
 import { useCurrentUser } from 'src/stores/currentUser.js'
-const { userData } = useCurrentUser()
+
+const store = useCurrentUser()
+const { userData } = storeToRefs(store)
 
 
 </script>
