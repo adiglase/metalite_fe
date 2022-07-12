@@ -21,7 +21,7 @@
 
       <q-separator></q-separator>
 
-      <q-img :src="postItem.image" alt="" :ratio="4 / 3"></q-img>
+      <q-img :src="postItem.image" alt=""></q-img>
 
       <q-card-section
         class="feed-description font-semibold text-justify border-radius-inherit q-mt-sm q-px-none q-py-xs">
@@ -32,7 +32,8 @@
         <q-btn flat :color="postItem.is_liked ? 'negative' : 'sub-action'" @click="onLikeHandler(postItem.id)"
           padding="0" :icon="postItem.is_liked ? 'favorite' : 'favorite_outline'" :loading="isLoading"
           :label="postItem.total_likes" class="q-mr-md"></q-btn>
-        <q-btn flat color="sub-action" padding="0" icon="chat_bubble_outline" label="0"></q-btn>
+        <q-btn @click="onClickCommentHandler(postItem.id)" flat color="sub-action" padding="0"
+          icon="chat_bubble_outline" label="0"></q-btn>
       </q-card-actions>
 
       <q-card-section class="feed-time font-semibold border-radius-inherit q-px-none q-py-xs" color="">
@@ -46,7 +47,9 @@
 <script setup>
 import axios from 'axios';
 import { ref } from 'vue';
+import { useRouter } from 'vue-router';
 
+const router = useRouter()
 const emit = defineEmits(["updatePostItem"])
 defineProps({
   postItem: Object
@@ -69,6 +72,14 @@ function formattedCreatedAt(createdAt) {
   const parsedDate = new Date(createdAt)
 
   return `${parsedDate.toLocaleDateString()} ${parsedDate.toLocaleTimeString()}`
+}
+
+function onClickCommentHandler(id) {
+  router.push({
+    name: 'postDetail', params: {
+      postId: id
+    }
+  })
 }
 </script>
 <style lang="scss" scoped>

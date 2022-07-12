@@ -14,6 +14,11 @@ const routes = [
         name: "profile",
         component: () => import("pages/ProfilePage.vue"),
       },
+      {
+        path: "/post/:postId",
+        name: "postDetail",
+        component: () => import("pages/PostPage.vue"),
+      },
     ],
   },
   {
