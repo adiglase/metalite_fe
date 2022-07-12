@@ -12,12 +12,12 @@
       </div>
 
       <div class="stat-item col">
-        <div class="stat-item-total font-bold text-center">0</div>
+        <div class="stat-item-total font-bold text-center">{{ userData.total_followers }}</div>
         <div class="stat-item-description font-semibold">Followers</div>
       </div>
 
       <div class="stat-item col">
-        <div class="stat-item-total font-bold text-center">0</div>
+        <div class="stat-item-total font-bold text-center">{{ userData.total_following }}</div>
         <div class="stat-item-description font-semibold">Following</div>
       </div>
     </div>

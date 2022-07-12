@@ -19,12 +19,12 @@
           </div>
 
           <div class="stat-item col">
-            <div class="stat-item-total font-bold text-center">0</div>
+            <div class="stat-item-total font-bold text-center">{{ profileData.total_followers }}</div>
             <div class="stat-item-description font-semibold">Followers</div>
           </div>
 
           <div class="stat-item col">
-            <div class="stat-item-total font-bold text-center">0</div>
+            <div class="stat-item-total font-bold text-center">{{ profileData.total_following }}</div>
             <div class="stat-item-description font-semibold">Following</div>
           </div>
         </div>
@@ -49,11 +49,13 @@ import { useErrors } from 'src/stores/errors';
 import axios from 'axios'
 import { onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
+import { useCurrentUser } from 'src/stores/currentUser.js'
 
 const isLoading = ref(false)
 
 const errors = useErrors()
 const route = useRoute()
+const { setUserData } = useCurrentUser()
 const userId = route.params.userId
 
 const profileData = ref({})
@@ -86,10 +88,20 @@ const onFollowHandler = async () => {
   try {
     const response = await axios.post(`/api/v1/follows/`, { following: userId })
     fetchProfileData()
+    fetchUserData()
   } catch (error) {
     console.log(error)
   }
   isLoading.value = false
+}
+
+const fetchUserData = async () => {
+  try {
+    const response = await axios.get("/api/v1/users/me");
+    setUserData(response.data)
+  } catch (error) {
+    console.log(error)
+  }
 }
 </script>
 <style lang="scss" scoped>
