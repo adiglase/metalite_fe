@@ -10,14 +10,14 @@
         </q-item>
       </router-link>
 
-      <q-item active-class="active-nav" clickable v-ripple>
+      <q-item disabled active-class="active-nav" clickable v-ripple>
         <q-item-section avatar top>
           <q-avatar size="40px" icon="o_widgets" class="nav-icon font-extrabold"></q-avatar>
         </q-item-section>
         <q-item-section>Explore</q-item-section>
       </q-item>
 
-      <q-item active-class="active-nav" clickable v-ripple>
+      <q-item disabled active-class="active-nav" clickable v-ripple>
         <q-item-section avatar top>
           <q-avatar size="40px" icon="o_chat" class="nav-icon font-extrabold"></q-avatar>
         </q-item-section>

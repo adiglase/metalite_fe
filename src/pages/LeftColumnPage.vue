@@ -4,7 +4,7 @@
     <SectionSeparatorLine></SectionSeparatorLine>
     <NavLinkList></NavLinkList>
     <SectionSeparatorLine></SectionSeparatorLine>
-    <ContactItemList></ContactItemList>
+    <!-- <ContactItemList></ContactItemList> -->
   </div>
 </template>
 <script setup>

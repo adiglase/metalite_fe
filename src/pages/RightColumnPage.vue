@@ -1,9 +1,10 @@
 <template>
   <div class="q-pa-lg">
-    <NotificationListBox>
-    </NotificationListBox>
-    <SectionSeparatorLine></SectionSeparatorLine>
+    <!-- <NotificationListBox>
+    </NotificationListBox> -->
+    <!-- <SectionSeparatorLine></SectionSeparatorLine> -->
     <SuggestionListBox></SuggestionListBox>
+    <SectionSeparatorLine></SectionSeparatorLine>
   </div>
 </template>
 <script setup>
