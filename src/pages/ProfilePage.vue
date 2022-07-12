@@ -32,7 +32,7 @@
 
       <div class="user-posts">
         <div class="row">
-          <div v-for="item in profileData.posts" :key="item.id" class="post-item col-sm-4"
+          <div v-for="item in profileData.posts" :key="item.id" class="col-xs-12 col-sm-6 col-md-4 post-item"
             @click="onClickPostHandler(item.id)">
             <q-card square class="my-card">
               <q-img :ratio="1 / 1" :src="item.image">
