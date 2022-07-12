@@ -1,66 +1,48 @@
 <template>
   <q-list>
-    <SectionHeaderTitle label="People You May Know"></SectionHeaderTitle>
+    <SectionHeaderTitle label="Yang mungkin anda kenal"></SectionHeaderTitle>
+    <q-spinner v-if="isFetchingSuggestionList" class="block q-mx-auto" color="primary" size="3em"></q-spinner>
 
-    <q-item class="q-mb-sm" v-ripple>
-      <q-item-section avatar>
-        <q-avatar>
-          <img src="~assets/dummy_profile_image.svg" />
-        </q-avatar>
-      </q-item-section>
-      <q-item-section>
-        <q-item-label>Khaby Lame</q-item-label>
-        <q-item-label class="address" caption lines="1">Memphis, TN, US</q-item-label>
-      </q-item-section>
-
-      <q-item-section side>
-        <q-icon name="o_person_add" color="primary"></q-icon>
-      </q-item-section>
+    <q-item @click="onUserClickHandler(user.id)" v-for="user in suggestionList" :key="user.id" class="q-mb-sm"
+      clickable>
+      <UserListItem @reFetchSuggestionList="fetchSuggestionList" :userData="user"></UserListItem>
     </q-item>
-
-    <q-item class="q-mb-sm" v-ripple>
-      <q-item-section avatar>
-        <q-avatar>
-          <img src="~assets/dummy_profile_image.svg" />
-        </q-avatar>
-      </q-item-section>
-      <q-item-section>
-        <q-item-label>Khaby Lame</q-item-label>
-        <q-item-label class="address" caption lines="1">Memphis, TN, US</q-item-label>
-      </q-item-section>
-
-      <q-item-section side>
-        <q-icon name="o_person_add" color="primary"></q-icon>
-      </q-item-section>
-    </q-item>
-
-    <q-item class="q-mb-sm" v-ripple>
-      <q-item-section avatar>
-        <q-avatar>
-          <img src="~assets/dummy_profile_image.svg" />
-        </q-avatar>
-      </q-item-section>
-      <q-item-section>
-        <q-item-label>Khaby Lame</q-item-label>
-        <q-item-label class="address" caption lines="1">Memphis, TN, US</q-item-label>
-      </q-item-section>
-
-      <q-item-section side>
-        <q-icon name="o_person_add" color="primary"></q-icon>
-      </q-item-section>
-    </q-item>
-    <SectionActionBtn></SectionActionBtn>
   </q-list>
 </template>
-<script>
-// Can't use script setup because bug of quasar if use it together with v-ripple
+<script setup>
+import { onMounted, ref } from "vue";
 import SectionHeaderTitle from "./SectionHeaderTitle.vue";
-import SectionActionBtn from "./SectionActionBtn.vue"
+import axios from 'axios'
+import { useRouter } from 'vue-router'
+import UserListItem from 'src/components/UserListItem.vue'
 
-export default {
-  components: {
-    SectionHeaderTitle,
-    SectionActionBtn
+const isFetchingSuggestionList = ref(false)
+const suggestionList = ref([])
+
+const router = useRouter()
+
+onMounted(() => {
+  fetchSuggestionList()
+})
+
+const fetchSuggestionList = async () => {
+  isFetchingSuggestionList.value = true
+  suggestionList.value = []
+  try {
+    const response = await axios.get(`api/v1/user/people_user_may_know/`)
+    suggestionList.value = response.data
+  } catch (error) {
+    console.log(error)
   }
+  isFetchingSuggestionList.value = false
+}
+
+const onUserClickHandler = (userId) => {
+  router.push({ name: 'profile', params: { userId: userId } })
 }
 </script>
+<style scoped>
+.follow-btn {
+  cursor: pointer;
+}
+</style>

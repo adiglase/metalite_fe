@@ -8,7 +8,7 @@
         <div class="user-name font-extrabold q-mt-sm">{{ profileData.full_name }}</div>
         <div class="username font-semibold">@{{ profileData.username }}</div>
 
-        <q-btn v-if="!profileData.is_current_user" @click="onFollowHandler" :loading="isLoading" rounded
+        <q-btn v-if="!profileData.is_current_user" @click="onFollowHandler(profileData.id)" :loading="isLoading" rounded
           padding="12px 24px" class="q-mt-md" size="md" color="action" no-caps
           :label="profileData.is_followed ? 'Unfollow' : 'Follow'"></q-btn>
 
@@ -48,7 +48,7 @@
 
 import { useErrors } from 'src/stores/errors';
 import axios from 'axios'
-import { onMounted, ref } from 'vue';
+import { onBeforeUnmount, onMounted, onUnmounted, ref, watch, watchEffect } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useCurrentUser } from 'src/stores/currentUser.js'
 
@@ -58,14 +58,14 @@ const errors = useErrors()
 const route = useRoute()
 const router = useRouter()
 const { setUserData } = useCurrentUser()
-const userId = route.params.userId
 
 const profileData = ref({})
 
-const fetchProfileData = async () => {
+const fetchProfileData = async (userId) => {
   const errorList = []
   try {
     const response = await axios.get(`/api/v1/user/${userId}/`);
+    console.log(response.data)
     profileData.value = response.data
   } catch (error) {
     if (error.response) {
@@ -81,18 +81,29 @@ const fetchProfileData = async () => {
 }
 
 onMounted(async () => {
-  await fetchProfileData()
+  await fetchProfileData(route.params.userId)
+})
+
+const watcher = watch(
+  () => route.params.userId,
+  (newVal, oldVal) => {
+    if (route.name == 'profile') fetchProfileData(newVal)
+  }
+)
+
+onBeforeUnmount(() => {
+  watcher()
 })
 
 const onClickPostHandler = (postId) => {
   router.push({ name: 'postDetail', params: { postId: postId } })
 }
 
-const onFollowHandler = async () => {
+const onFollowHandler = async (userId) => {
   isLoading.value = true
   try {
     const response = await axios.post(`/api/v1/follows/`, { following: userId })
-    fetchProfileData()
+    fetchProfileData(route.params.userId)
     fetchUserData()
   } catch (error) {
     console.log(error)
