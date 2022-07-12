@@ -117,6 +117,7 @@ const onSendCommentHandler = async () => {
 
   try {
     const response = await axios.post(`api/v1/comments/`, commentFormData)
+    fetchPostDetail()
     fetchComments()
   } catch (error) {
     console.log(error)

@@ -33,7 +33,7 @@
           padding="0" :icon="postItem.is_liked ? 'favorite' : 'favorite_outline'" :loading="isLoading"
           :label="postItem.total_likes" class="q-mr-md"></q-btn>
         <q-btn @click="onClickCommentHandler(postItem.id)" flat color="sub-action" padding="0"
-          icon="chat_bubble_outline" label="0"></q-btn>
+          icon="chat_bubble_outline" :label="postItem.total_comments"></q-btn>
       </q-card-actions>
 
       <q-card-section class="feed-time font-semibold border-radius-inherit q-px-none q-py-xs" color="">
