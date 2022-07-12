@@ -1,7 +1,7 @@
 <template>
   <article class="q-my-lg">
     <q-card flat class="col">
-      <q-item>
+      <q-item class="user-detail">
         <q-item-section avatar>
           <q-avatar>
             <img :src="postItem.user_image">
@@ -9,10 +9,13 @@
         </q-item-section>
 
         <q-item-section>
-          <q-item-label class="user-full-name font-bold">{{ postItem.user_full_name }}</q-item-label>
-          <q-item-label class="username" caption>
-            @{{ postItem.user_username }}
-          </q-item-label>
+          <router-link style="text-decoration: none; color: inherit;"
+            :to="{ name: 'profile', params: { userId: postItem.user_id } }">
+            <q-item-label class="user-full-name font-bold">{{ postItem.user_full_name }}</q-item-label>
+            <q-item-label class="username" caption>
+              @{{ postItem.user_username }}
+            </q-item-label>
+          </router-link>
         </q-item-section>
         <q-item-section side>
           <q-icon name="more_horiz" class="feed-option" color="primary-font"></q-icon>
