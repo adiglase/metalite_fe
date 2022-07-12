@@ -32,7 +32,8 @@
 
       <div class="user-posts">
         <div class="row">
-          <div v-for="item in profileData.posts" :key="item.id" class="post-item col-sm-4">
+          <div v-for="item in profileData.posts" :key="item.id" class="post-item col-sm-4"
+            @click="onClickPostHandler(item.id)">
             <q-card square class="my-card">
               <q-img :ratio="1 / 1" :src="item.image">
               </q-img>
@@ -48,13 +49,14 @@
 import { useErrors } from 'src/stores/errors';
 import axios from 'axios'
 import { onMounted, ref } from 'vue';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import { useCurrentUser } from 'src/stores/currentUser.js'
 
 const isLoading = ref(false)
 
 const errors = useErrors()
 const route = useRoute()
+const router = useRouter()
 const { setUserData } = useCurrentUser()
 const userId = route.params.userId
 
@@ -82,6 +84,9 @@ onMounted(async () => {
   await fetchProfileData()
 })
 
+const onClickPostHandler = (postId) => {
+  router.push({ name: 'postDetail', params: { postId: postId } })
+}
 
 const onFollowHandler = async () => {
   isLoading.value = true
