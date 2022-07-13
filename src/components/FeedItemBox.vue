@@ -17,8 +17,17 @@
             </q-item-label>
           </router-link>
         </q-item-section>
-        <q-item-section side>
-          <q-icon name="more_horiz" class="feed-option" color="primary-font"></q-icon>
+        <q-item-section v-if="userData.id === postItem.user_id" side>
+          <q-btn :loading="isDeleting" flat>
+            <q-icon name="more_horiz" class="feed-option" color="primary-font"></q-icon>
+            <q-menu>
+              <q-list>
+                <q-item clickable v-close-popup @click="onDeletePostHandler(postItem.id)">
+                  <q-item-section>Delete Post</q-item-section>
+                </q-item>
+              </q-list>
+            </q-menu>
+          </q-btn>
         </q-item-section>
       </q-item>
 
@@ -51,14 +60,19 @@
 import axios from 'axios';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
+import { useCurrentUser } from 'src/stores/currentUser.js'
+import { storeToRefs } from 'pinia';
 
 const router = useRouter()
+const currentUserStore = useCurrentUser()
+const { userData } = storeToRefs(currentUserStore)
 const emit = defineEmits(["updatePostItem"])
 defineProps({
   postItem: Object
 })
 
 const isLoading = ref(false)
+const isDeleting = ref(false)
 
 async function onLikeHandler(postId) {
   isLoading.value = true
@@ -83,6 +97,17 @@ function onClickCommentHandler(id) {
       postId: id
     }
   })
+}
+
+async function onDeletePostHandler(postId) {
+  isDeleting.value = true
+  try {
+    const response = await axios.delete(`/api/v1/posts/${postId}/`)
+    location.reload()
+  } catch (error) {
+    console.log(error)
+  }
+  isDeleting.value = false
 }
 </script>
 <style lang="scss" scoped>
