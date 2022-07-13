@@ -1,7 +1,9 @@
 <template>
   <q-page>
     <MessageBox v-if="errors.length" :message="String(errors)" type="danger"></MessageBox>
-    <FeedListBox :isLoading="isLoading" :postList="postList" @updatePostItem="updatePostItem"></FeedListBox>
+    <FeedListBox v-if="postList.length" :isLoading="isLoading" :postList="postList" @updatePostItem="updatePostItem">
+    </FeedListBox>
+    <div v-else class="text-grey">Tidak ditemukan post. Follow user lain untuk melihat postingan mereka</div>
   </q-page>
 </template>
 <script setup>
