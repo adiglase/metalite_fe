@@ -2,7 +2,7 @@
   <article class="q-mt-lg">
     <div class="header">
       <p class="font-extrabold">Feeds</p>
-      <q-btn rounded padding="12px 24px" class="q-ml-auto" size="md" color="action" no-caps label="Latest"></q-btn>
+      <!-- <q-btn rounded padding="12px 24px" class="q-ml-auto" size="md" color="action" no-caps label="Latest"></q-btn> -->
     </div>
 
     <div class="list-container">
