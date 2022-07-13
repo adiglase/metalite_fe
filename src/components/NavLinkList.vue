@@ -10,7 +10,7 @@
         </q-item>
       </router-link>
 
-      <q-item disabled active-class="active-nav" clickable v-ripple>
+      <!-- <q-item disabled active-class="active-nav" clickable v-ripple>
         <q-item-section avatar top>
           <q-avatar size="40px" icon="o_widgets" class="nav-icon font-extrabold"></q-avatar>
         </q-item-section>
@@ -22,7 +22,7 @@
           <q-avatar size="40px" icon="o_chat" class="nav-icon font-extrabold"></q-avatar>
         </q-item-section>
         <q-item-section>Direct</q-item-section>
-      </q-item>
+      </q-item> -->
 
       <router-link v-if="userData" :to="{ name: 'profile', params: { userId: userData.id } }">
         <q-item active-class="active-nav" :active="route.name === 'profile'" clickable v-ripple>
